@@ -33,7 +33,7 @@ public class MessageService {
         return message;
     }
 
-    public Message removeMessage(Long id) {
-        return messages.remove(id);
+    public void removeMessage(Long id) {
+        messages.remove(id);
     }
 }
