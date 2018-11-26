@@ -4,8 +4,10 @@ import com.yukhlin.database.DatabaseClass;
 import com.yukhlin.model.Message;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class MessageService {
 
@@ -13,6 +15,19 @@ public class MessageService {
 
     public List<Message> getAllMessages() {
         return new ArrayList<>(messages.values());
+    }
+
+    public List<Message> getAllMessagesForYear(int year) {
+        Calendar calendar = Calendar.getInstance();
+
+        return messages
+                .values()
+                .stream()
+                .filter(message -> {
+            calendar.setTime(message.getDate());
+            return calendar.get(Calendar.YEAR) == year;
+        })
+                .collect(Collectors.toList());
     }
 
     public Message getMessage(Long id) {
