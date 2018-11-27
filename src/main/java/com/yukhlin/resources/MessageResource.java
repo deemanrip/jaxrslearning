@@ -1,6 +1,7 @@
 package com.yukhlin.resources;
 
 import com.yukhlin.model.Message;
+import com.yukhlin.resources.beans.MessageFilterBean;
 import com.yukhlin.service.MessageService;
 
 import javax.ws.rs.*;
@@ -15,14 +16,12 @@ public class MessageResource {
     private MessageService messageService = new MessageService();
 
     @GET
-    public List<Message> getMessages(@QueryParam("year") int year,
-                                     @QueryParam("offset") int offset,
-                                     @QueryParam("pageSize") int pageSize) {
-        if (year > 0) {
-            return messageService.getAllMessagesForYear(year);
+    public List<Message> getMessages(@BeanParam MessageFilterBean filterBean) {
+        if (filterBean.getYear() > 0) {
+            return messageService.getAllMessagesForYear(filterBean.getYear());
         }
-        if (offset > 0 && pageSize > 0) {
-            return messageService.getAllMessagesPaginated(offset, pageSize);
+        if (filterBean.getOffset() > 0 && filterBean.getPageSize() > 0) {
+            return messageService.getAllMessagesPaginated(filterBean.getOffset(), filterBean.getPageSize());
         }
 
         return messageService.getAllMessages();
