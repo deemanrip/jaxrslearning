@@ -12,8 +12,8 @@ public class DatabaseClass {
     private static Map<String, Profile> profiles = new HashMap<>();
 
     static {
-        messages.put(1L, new Message(1, "Test message", "deeman"));
-        messages.put(2L, new Message(2, "Hello!", "test_user"));
+        messages.put(1L, new Message(1L, "Test message", "deeman"));
+        messages.put(2L, new Message(2L, "Hello!", "test_user"));
 
         profiles.put("deeman", new Profile(1L, "deeman", "Dmitry", "Yukhlin"));
     }

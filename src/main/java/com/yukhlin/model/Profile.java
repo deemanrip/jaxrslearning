@@ -6,7 +6,7 @@ import java.util.Date;
 @XmlRootElement
 public class Profile {
 
-    private long id;
+    private Long id;
     private String profileName;
     private String firstName;
     private String lastName;
@@ -15,7 +15,7 @@ public class Profile {
     public Profile() {
     }
 
-    public Profile(long id, String profileName, String firstName, String lastName) {
+    public Profile(Long id, String profileName, String firstName, String lastName) {
         this.id = id;
         this.profileName = profileName;
         this.firstName = firstName;
@@ -23,11 +23,11 @@ public class Profile {
         this.created = new Date();
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

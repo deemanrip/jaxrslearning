@@ -20,7 +20,7 @@ public class ProfileService {
     }
 
     public Profile addProfile(Profile profile) {
-        profile.setId(profiles.size() + 1);
+        profile.setId((long) profiles.size() + 1);
         profiles.put(profile.getProfileName(), profile);
 
         return profile;
