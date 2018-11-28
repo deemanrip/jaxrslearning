@@ -1,4 +1,4 @@
-package com.yukhlin.resources;
+package com.yukhlin.resource;
 
 import com.yukhlin.model.Profile;
 import com.yukhlin.service.ProfileService;

@@ -1,4 +1,4 @@
-package com.yukhlin.resources;
+package com.yukhlin.resource;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;

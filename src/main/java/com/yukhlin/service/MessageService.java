@@ -1,6 +1,7 @@
 package com.yukhlin.service;
 
 import com.yukhlin.database.DatabaseClass;
+import com.yukhlin.exception.DataNotFoundException;
 import com.yukhlin.model.Message;
 
 import java.util.*;
@@ -34,7 +35,9 @@ public class MessageService {
     }
 
     public Message getMessage(Long id) {
-        return messages.get(id);
+        return Optional
+                .ofNullable(messages.get(id))
+                .orElseThrow(() -> new DataNotFoundException("Message with id " + id + " not found"));
     }
 
     public Message addMessage(Message message) {

@@ -1,7 +1,7 @@
-package com.yukhlin.resources;
+package com.yukhlin.resource;
 
 import com.yukhlin.model.Message;
-import com.yukhlin.resources.beans.MessageFilterBean;
+import com.yukhlin.resource.bean.MessageFilterBean;
 import com.yukhlin.service.MessageService;
 
 import javax.ws.rs.*;

@@ -1,4 +1,4 @@
-package com.yukhlin.resources.beans;
+package com.yukhlin.resource.bean;
 
 import javax.ws.rs.QueryParam;
 
