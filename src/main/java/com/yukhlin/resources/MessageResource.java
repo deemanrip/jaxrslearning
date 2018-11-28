@@ -5,7 +5,11 @@ import com.yukhlin.resources.beans.MessageFilterBean;
 import com.yukhlin.service.MessageService;
 
 import javax.ws.rs.*;
+import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
+import java.net.URI;
 import java.util.List;
 
 @Path("/messages")
@@ -28,8 +32,12 @@ public class MessageResource {
     }
 
     @POST
-    public Message addMessage(Message message) {
-        return messageService.addMessage(message);
+    public Response addMessage(Message message, @Context UriInfo uriInfo) {
+        Message newMessage = messageService.addMessage(message);
+        String newId = String.valueOf(newMessage.getId());
+        URI location = uriInfo.getAbsolutePathBuilder().path(newId).build();
+
+        return Response.created(location).entity(newMessage).build();
     }
 
     @PUT
