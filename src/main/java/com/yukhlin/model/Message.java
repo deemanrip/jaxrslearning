@@ -1,5 +1,7 @@
 package com.yukhlin.model;
 
+import javax.ws.rs.core.Link;
+import javax.ws.rs.core.UriBuilder;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import java.util.*;
@@ -12,7 +14,7 @@ public class Message {
     private Date created;
     private String author;
     private Map<Long, Comment> comments = new HashMap<>();
-    private List<Link> links = new ArrayList<>();
+    private Set<Link> links = new HashSet<>();
 
     public Message() {
     }
@@ -65,18 +67,19 @@ public class Message {
         this.comments = comments;
     }
 
-    public List<Link> getLinks() {
+    public Set<Link> getLinks() {
         return links;
     }
 
-    public void setLinks(List<Link> links) {
+    public void setLinks(Set<Link> links) {
         this.links = links;
     }
 
-    public void addLink(String uri, String rel) {
-        Link link = new Link();
-        link.setLink(uri);
-        link.setRel(rel);
+    public void addLink(UriBuilder uriBuilder, String rel) {
+        Link link = Link
+                .fromUriBuilder(uriBuilder)
+                .rel(rel)
+                .build();
         links.add(link);
     }
 }

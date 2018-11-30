@@ -5,10 +5,7 @@ import com.yukhlin.resource.bean.MessageFilterBean;
 import com.yukhlin.service.MessageService;
 
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.List;
 
@@ -58,21 +55,36 @@ public class MessageResource {
     public Message getMessage(@PathParam("messageId") Long messageId, @Context UriInfo uriInfo) {
         Message message = messageService.getMessage(messageId);
         message.addLink(getSelfUri(uriInfo, message), "self");
+        message.addLink(getProfileUri(uriInfo, message), "profile");
+        message.addLink(getCommentsUri(uriInfo, message), "comments");
 
         return message;
-    }
-
-    private String getSelfUri(UriInfo uriInfo, Message message) {
-        return uriInfo
-                    .getBaseUriBuilder()
-                    .path(MessageResource.class)
-                    .path(String.valueOf(message.getId()))
-                    .build()
-                    .toString();
     }
 
     @Path("/{messageId}/comments")
     public CommentResource getCommentResource() {
         return new CommentResource();
+    }
+
+    private UriBuilder getCommentsUri(UriInfo uriInfo, Message message) {
+        return uriInfo
+                .getBaseUriBuilder()
+                .path(MessageResource.class)
+                .path(MessageResource.class, "getCommentResource")
+                .resolveTemplate("messageId", message.getId());
+    }
+
+    private UriBuilder getProfileUri(UriInfo uriInfo, Message message) {
+        return uriInfo
+                .getBaseUriBuilder()
+                .path(ProfileResource.class)
+                .path(message.getAuthor());
+    }
+
+    private UriBuilder getSelfUri(UriInfo uriInfo, Message message) {
+        return uriInfo
+                .getBaseUriBuilder()
+                .path(MessageResource.class)
+                .path(String.valueOf(message.getId()));
     }
 }
