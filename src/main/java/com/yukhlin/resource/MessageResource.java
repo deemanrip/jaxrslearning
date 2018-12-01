@@ -17,15 +17,15 @@ public class MessageResource {
     private MessageService messageService = new MessageService();
 
     @GET
-    public List<Message> getMessages(@BeanParam MessageFilterBean filterBean) {
-        if (filterBean.getYear() > 0) {
-            return messageService.getAllMessagesForYear(filterBean.getYear());
-        }
-        if (filterBean.getOffset() > 0 && filterBean.getPageSize() > 0) {
-            return messageService.getAllMessagesPaginated(filterBean.getOffset(), filterBean.getPageSize());
-        }
+    @Produces(MediaType.APPLICATION_JSON)
+    public List<Message> getJSONMessages(@BeanParam MessageFilterBean filterBean) {
+        return getMessages(filterBean);
+    }
 
-        return messageService.getAllMessages();
+    @GET
+    @Produces(MediaType.TEXT_XML)
+    public List<Message> getXmlMessages(@BeanParam MessageFilterBean filterBean) {
+        return getMessages(filterBean);
     }
 
     @POST
@@ -64,6 +64,17 @@ public class MessageResource {
     @Path("/{messageId}/comments")
     public CommentResource getCommentResource() {
         return new CommentResource();
+    }
+
+    private List<Message> getMessages(MessageFilterBean filterBean) {
+        if (filterBean.getYear() > 0) {
+            return messageService.getAllMessagesForYear(filterBean.getYear());
+        }
+        if (filterBean.getOffset() > 0 && filterBean.getPageSize() > 0) {
+            return messageService.getAllMessagesPaginated(filterBean.getOffset(), filterBean.getPageSize());
+        }
+
+        return messageService.getAllMessages();
     }
 
     private UriBuilder getCommentsUri(UriInfo uriInfo, Message message) {
