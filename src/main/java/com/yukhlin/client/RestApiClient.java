@@ -4,7 +4,9 @@ import com.yukhlin.model.Message;
 
 import javax.ws.rs.client.Client;
 import javax.ws.rs.client.ClientBuilder;
+import javax.ws.rs.client.Entity;
 import javax.ws.rs.client.WebTarget;
+import javax.ws.rs.core.Response;
 
 public class RestApiClient {
     public static void main(String[] args) {
@@ -23,7 +25,13 @@ public class RestApiClient {
                 .request()
                 .get(Message.class);
 
-        System.out.println(message1.getMessage());
-        System.out.println(message2.getMessage());
+        Message newMessage = new Message(4L, "Message from rest client", "restClient");
+
+        Response postResponse = messagesTarget
+                .request()
+                .post(Entity.json(newMessage));
+        Message createdMessage = postResponse.readEntity(Message.class);
+
+        System.out.println(createdMessage.getMessage());
     }
 }
